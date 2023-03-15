@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/rr37/ac_2-3_s2_restaurant_list#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0"
   }
 }
