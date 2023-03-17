@@ -15,9 +15,10 @@ app.use(express.static('public'))
 
 // routes setting
 app.get('/',(req, res) =>{
-  res.render('index')
+  res.render('index', {restaurants: restaurantList.results})
 })
 
+// listen on server
 app.listen(port, (req, res) => {
   console.log(`Express is listening on localhost: ${port}`)
 })
