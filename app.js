@@ -18,6 +18,15 @@ app.get('/',(req, res) =>{
   res.render('index', {restaurants: restaurantList.results})
 })
 
+app.get('/search', (req, res) => {
+  const results = restaurantList.results
+  const keyword = req.query.keyword
+  const searchRestaurant = results.filter( result => {
+    return result.name.toLowerCase().includes(keyword.toLowerCase())
+  })
+  res.render('index', { restaurants: searchRestaurant,keyword: keyword })
+})
+
 app.get('/restaurants/:id', (req, res) => {
   const results = restaurantList.results
   const restaurant = results.find(result => 
