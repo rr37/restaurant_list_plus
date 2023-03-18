@@ -25,9 +25,9 @@
 
 1.確認已安裝 node.js 、 npm
 
-node.js 可透過nvm進行安裝,而 npm 會在安裝 node.js 自動下載。
-nvm 安裝方式[傳送門](https://github.com/creationix/nvm)
-node.js 安裝方式
+  -  node.js 可透過nvm進行安裝,而 npm 會在安裝 node.js 自動下載。
+  - nvm 安裝方式[傳送門](https://github.com/creationix/nvm)
+  -  node.js 安裝方式:
   ```bash
   $ nvm install 14.16.0
   ```
