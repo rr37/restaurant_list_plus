@@ -21,9 +21,16 @@ app.get('/',(req, res) =>{
 app.get('/search', (req, res) => {
   const results = restaurantList.results
   const keyword = req.query.keyword
-  const searchRestaurant = results.filter( result => {
-    return result.name.toLowerCase().includes(keyword.toLowerCase())
-  })
+
+  //當無輸入資料或輸入空格時導至主畫面
+  if (!keyword || keyword.trim()==="") {
+    return res.redirect("/")
+  }
+
+  const searchRestaurant = results.filter( result => 
+    result.name.toLowerCase().includes(keyword.toLowerCase()) ||
+    result.category.includes(keyword)
+  )
   res.render('index', { restaurants: searchRestaurant,keyword: keyword })
 })
 
