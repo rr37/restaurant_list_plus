@@ -22,6 +22,10 @@
   "homepage": "https://github.com/rr37/ac_2-3_s2_restaurant_list#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "express-handlebars": "^3.0.0"
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.9.7"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
   }
 }
