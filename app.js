@@ -1,13 +1,18 @@
 // require packages used in the project
 const express = require('express')
+const exphbs = require('express-handlebars')
 // require mongoose
 const mongoose = require('mongoose')
+// 載入 Restaurant model
+const Restaurant = require('./models/restaurant')
+// 引用 body-parser
+const bodyParser = require('body-parser')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const app = express()
+
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // 取得資料庫連線狀態
@@ -21,23 +26,26 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
+const app = express()
 const port = 3000
-
-
-
-const exphbs = require('express-handlebars')
-const restaurantList = require('./models/seeds/restaurant.json')
 
 // setting template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
-
 // setting static files
 app.use(express.static('public'))
+// 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // routes setting
-app.get('/',(req, res) =>{
-  res.render('index', {restaurants: restaurantList.results})
+app.get('/', (req, res) =>{
+  Restaurant.find({})
+    .lean()
+    .then(restaurantsData => {
+      res.render('index', { restaurantsData })
+      console.log(restaurantsData)
+    })
+    .catch(err => console.log(err))
 })
 
 app.get('/search', (req, res) => {
