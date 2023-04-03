@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const Restaurant = require('./models/restaurant')
 // 引用 body-parser
 const bodyParser = require('body-parser')
+const restaurant = require('./models/restaurant')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -74,11 +75,11 @@ app.get('/search', (req, res) => {
 })
 
 app.get('/restaurants/:id', (req, res) => {
-  const results = restaurantList.results
-  const restaurant = results.find(result => 
-    result.id.toString() === req.params.id
-  )
-    res.render('show', { restaurant: restaurant })
+  const id = req.params.id
+  return Restaurant.findById(id)
+  .lean()
+  .then((restaurant) => res.render('show', { restaurant }))
+  .catch(error => console.log(error))
 })
 
 // listen on server
