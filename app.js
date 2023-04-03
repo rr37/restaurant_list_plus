@@ -76,7 +76,7 @@ app.get('/search', (req, res) => {
 
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
-  return Restaurant.findById(id)
+  Restaurant.findById(id)
   .lean()
   .then((restaurant) => res.render('show', { restaurant }))
   .catch(error => console.log(error))
@@ -84,7 +84,7 @@ app.get('/restaurants/:id', (req, res) => {
 
 app.get('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
-  return Restaurant.findById(id)
+  Restaurant.findById(id)
     .lean()
     .then((restaurant) => res.render('edit', { restaurant }))
     .catch(error => console.log(error))
@@ -95,6 +95,13 @@ app.post('/restaurants/:id', (req, res) => {
   Restaurant.findByIdAndUpdate(id, req.body)
     //可依照專案發展方向自定編輯後的動作，這邊是導向到瀏覽特定餐廳頁面
     .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(error => console.log(error))
+})
+
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  Restaurant.findByIdAndDelete(id)
+    .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
