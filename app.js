@@ -43,8 +43,17 @@ app.get('/', (req, res) =>{
     .lean()
     .then(restaurantsData => {
       res.render('index', { restaurantsData })
-      console.log(restaurantsData)
     })
+    .catch(err => console.log(err))
+})
+
+app.get('/restaurants/new', (req, res) => {
+  res.render('new')
+})
+
+app.post('/restaurants', (req, res) => {
+  Restaurant.create(req.body)
+    .then(() => res.redirect('/'))
     .catch(err => console.log(err))
 })
 
