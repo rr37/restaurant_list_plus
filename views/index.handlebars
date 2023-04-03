@@ -31,7 +31,7 @@
         {{#each restaurantsData}}
         <div class="mb-4">
           <div class="card mb-1">
-            <a href="/restaurants/{{this.id}}" style="text-decoration: none;">
+            <a href="/restaurants/{{this._id}}" style="text-decoration: none;">
               <!-- image -->
               <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
               <!-- body -->
@@ -51,7 +51,7 @@
             <!-- edit, detail, delete -->
             <div class="card-footer">
               <div class="float-end">
-                <a class="me-1" href="/restaurants/{{this.id}}">Edit</a>
+                <a class="me-1" href="/restaurants/{{this._id}}/edit">Edit</a>
                 <a class="me-1" href="/restaurants/{{this._id}}">Detail</a>
                 <button class="btn btn-danger btn-sm" type="button">
                   Delete
