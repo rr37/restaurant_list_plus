@@ -19,9 +19,9 @@ router.get('/search', (req, res) => {
   const keywords = req.query.keyword
   const keyword = req.query.keyword.trim().toLowerCase()
 
-  //當無輸入資料或輸入空格時導至主畫面
-  if (!keywords || keywords.trim() === "") {
-    return res.redirect("/")
+  // 當無輸入資料或輸入空格時導至主畫面
+  if (!keywords || keywords.trim() === '') {
+    return res.redirect('/')
   }
 
   console.log(keywords)
@@ -33,9 +33,9 @@ router.get('/search', (req, res) => {
           data.name.toLowerCase().includes(keyword) ||
           data.category.includes(keyword)
       )
-      res.render("index", {
+      res.render('index', {
         restaurantsData: filterRestaurantsData,
-        keywords,
+        keywords
       })
     })
     .catch(err => console.log(err))
