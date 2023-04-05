@@ -3,13 +3,12 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 // require mongoose
 const mongoose = require('mongoose')
-// 載入 Restaurant model
-const Restaurant = require('./models/restaurant')
 // 引用 body-parser
 const bodyParser = require('body-parser')
-const restaurant = require('./models/restaurant')
 // 載入 method-override
 const methodOverride = require('method-override')
+// 引用路由器
+const routes = require('./routes')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -41,73 +40,8 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 // 設定每一筆請求都會通過 method-override 進行處理
 app.use(methodOverride('_method'))
-
-// routes setting
-app.get('/', (req, res) =>{
-  Restaurant.find({})
-    .lean()
-    .then(restaurantsData => {
-      res.render('index', { restaurantsData })
-    })
-    .catch(err => console.log(err))
-})
-
-app.get('/restaurants/new', (req, res) => {
-  res.render('new')
-})
-
-app.post('/restaurants', (req, res) => {
-  Restaurant.create(req.body)
-    .then(() => res.redirect('/'))
-    .catch(err => console.log(err))
-})
-
-app.get('/search', (req, res) => {
-  const results = restaurantList.results
-  const keyword = req.query.keyword
-
-  //當無輸入資料或輸入空格時導至主畫面
-  if (!keyword || keyword.trim()==="") {
-    return res.redirect("/")
-  }
-
-  const searchRestaurant = results.filter( result => 
-    result.name.toLowerCase().includes(keyword.toLowerCase()) ||
-    result.category.includes(keyword)
-  )
-  res.render('index', { restaurants: searchRestaurant,keyword: keyword })
-})
-
-app.get('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  Restaurant.findById(id)
-  .lean()
-  .then((restaurant) => res.render('show', { restaurant }))
-  .catch(error => console.log(error))
-})
-
-app.get('/restaurants/:id/edit', (req, res) => {
-  const id = req.params.id
-  Restaurant.findById(id)
-    .lean()
-    .then((restaurant) => res.render('edit', { restaurant }))
-    .catch(error => console.log(error))
-})
-
-app.put('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  Restaurant.findByIdAndUpdate(id, req.body)
-    //可依照專案發展方向自定編輯後的動作，這邊是導向到瀏覽特定餐廳頁面
-    .then(() => res.redirect(`/restaurants/${id}`))
-    .catch(error => console.log(error))
-})
-
-app.delete('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  Restaurant.findByIdAndDelete(id)
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
+// 將 request 導入路由器
+app.use(routes)
 
 // listen on server
 app.listen(port, (req, res) => {
