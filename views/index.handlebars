@@ -5,15 +5,21 @@
       <form action="/search">
         <div class="d-flex justify-content-between mb-2">
           <h4>尋找餐廳：</h4>
-          <a class="float-end" href="/restaurants/new">
-            <button type="button" class="btn btn-primary">
-              新增餐廳
-            </button>
-          </a>
         </div>
         <div class="input-group">
           <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
             value="{{keywords}}" aria-describedby="search-button">
+          <div class="input-group-append">
+            <select class="form-select" name="sort" id="sort" onchange='this.form.submit()'>
+              <option value='' {{#if sort}}{{else}}selected{{/if}} disabled>選擇排序方式</option>
+              <option value='_id-desc' {{#is sort '_id-desc' }} selected {{/is}}>最新</option>
+              <option value='_id-asc' {{#is sort '_id-asc' }} selected {{/is}}>最舊</option>
+              <option value='name-asc' {{#is sort 'name-asc' }} selected {{/is}}>A > Z</option>
+              <option value='name-desc' {{#is sort 'name-desc' }} selected {{/is}}>Z > A</option>
+              <option value='rating-desc' {{#is sort 'rating-desc' }} selected {{/is}}>評分最高</option>
+              <option value='rating-asc' {{#is sort 'rating-asc' }} selected {{/is}}>評分最低</option>
+            </select>
+          </div>
           <div class="input-group-append">
             <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
           </div>
@@ -26,6 +32,7 @@
 <!-- restaurant list -->
 <div class="container mt-5">
   <div class="row">
+    {{#if restaurantsData}}
     <div class="col-md-10 col-12 mx-auto">
       <div class="row row-cols-sm-3">
         {{#each restaurantsData}}
@@ -60,8 +67,15 @@
             </div>
           </div>
         </div>
-        {{/each}}
+        {{/each}}      
       </div>
     </div>
+    {{!-- 找不到結果時顯示如下 --}}
+    {{else}}
+    <div class="d-flex justify-content-end flex-column align-items-center m-3">
+      <h3 class="mb-3">我們搜遍了資料庫的每寸角落，也找不到包含「{{keywords}}」關鍵字的餐廳</h3>
+      <h6>「真像一塊塊綠豆糕。」一位外號叫「大食客」的同學緊接著說。</h6>
+    </div>
+    {{/if}}
   </div>
 </div>

@@ -18,15 +18,23 @@ router.get('/', (req, res) => {
 router.get('/search', (req, res) => {
   const keywords = req.query.keyword
   const keyword = req.query.keyword.trim().toLowerCase()
+  const sort = req.query.sort
+  const sortObject = {}
 
-  // 當無輸入資料或輸入空格時導至主畫面
-  if (!keywords || keywords.trim() === '') {
+  // 排序功能
+  if (sort) {
+    const sortArray = sort.split('-')
+    const key = sortArray[0]
+    const value = sortArray[1]
+    sortObject[key] = value
+    // 當無輸入資料或輸入空格時導至主畫面
+  } else if (!keywords || keywords.trim() === '') {
     return res.redirect('/')
   }
 
-  console.log(keywords)
   Restaurant.find({})
     .lean()
+    .sort(sortObject)
     .then(restaurantsData => {
       const filterRestaurantsData = restaurantsData.filter(
         data =>
@@ -35,7 +43,8 @@ router.get('/search', (req, res) => {
       )
       res.render('index', {
         restaurantsData: filterRestaurantsData,
-        keywords
+        keywords,
+        sort
       })
     })
     .catch(err => console.log(err))

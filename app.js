@@ -1,6 +1,7 @@
 // require packages used in the project
 const express = require('express')
 const exphbs = require('express-handlebars')
+const helpers = require('handlebars-helpers')()
 // require mongoose
 const mongoose = require('mongoose')
 // 引用 body-parser
