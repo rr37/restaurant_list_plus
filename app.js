@@ -2,31 +2,14 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const helpers = require('handlebars-helpers')()
-// require mongoose
-const mongoose = require('mongoose')
 // 引用 body-parser
 const bodyParser = require('body-parser')
 // 載入 method-override
 const methodOverride = require('method-override')
 // 引用路由器
 const routes = require('./routes')
-
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
-
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-
-// 取得資料庫連線狀態
-const db = mongoose.connection
-// 連線異常
-db.on('error', () => {
-  console.log('mongodb error!')
-})
-// 連線成功
-db.once('open', () => {
-  console.log('mongodb connected!')
-})
+// 引用mongoose config
+require('./config/mongoose')
 
 const app = express()
 const port = 3000
