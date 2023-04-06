@@ -1,10 +1,10 @@
 # ac_2-3_s2_restaurant_list
 
-![Screenshot of Restaurant List](./public/image/snapshot2.png)
+![Screenshot of Restaurant List](./public/image/snapshot3.png)
 
 ## 簡介
 
-一個餐廳清單小專案，可以在頁面中進行餐廳資訊的搜尋、瀏覽、新增、修改、刪除。
+一個餐廳清單小專案，可以在頁面中進行餐廳資訊的搜尋、瀏覽、新增、修改、排序、刪除。
 
 ## 功能
 
@@ -15,6 +15,7 @@
 - 新增餐廳
 - 編輯餐廳
 - 刪除餐廳
+- 排序餐廳
 
 ## 開發環境與套件
 
@@ -25,6 +26,7 @@
 * fontawesome@5.8.1 (CDN) - icon
 * MongoDB - 資料庫
 * mongoose@5.9.7 - MongoDB ODM
+* handlebars-helpers@0.10.0 - 樣版引擎條件外掛
 
 ## 安裝與執行
 
