@@ -9,38 +9,43 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  Restaurant.create(req.body)
+  const userId = req.user._id
+  return Restaurant.create({ ...req.body, userId })
     .then(() => res.redirect('/'))
     .catch(err => console.log(err))
 })
 
 router.get('/:id', (req, res) => {
-  const id = req.params.id
-  Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findOne({ _id, userId })
     .lean()
     .then((restaurant) => res.render('show', { restaurant }))
     .catch(error => console.log(error))
 })
 
 router.get('/:id/edit', (req, res) => {
-  const id = req.params.id
-  Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findOne({ _id, userId })
     .lean()
     .then((restaurant) => res.render('edit', { restaurant }))
     .catch(error => console.log(error))
 })
 
 router.put('/:id', (req, res) => {
-  const id = req.params.id
-  Restaurant.findByIdAndUpdate(id, req.body)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findByIdAndUpdate( _id, req.body )
     // 可依照專案發展方向自定編輯後的動作，這邊是導向到瀏覽特定餐廳頁面
-    .then(() => res.redirect(`/restaurants/${id}`))
+    .then(() => res.redirect(`/restaurants/${_id}`))
     .catch(error => console.log(error))
 })
 
 router.delete('/:id', (req, res) => {
-  const id = req.params.id
-  Restaurant.findByIdAndDelete(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findByIdAndDelete({ _id, userId })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
