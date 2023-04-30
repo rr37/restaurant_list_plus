@@ -1,6 +1,7 @@
 // require packages used in the project
 const express = require('express')
 const session = require('express-session')
+const usePassport = require('./config/passport')
 const exphbs = require('express-handlebars')
 const helpers = require('handlebars-helpers')()
 // 引用 body-parser
@@ -25,7 +26,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
-
+usePassport(app)
 // 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(bodyParser.urlencoded({ extended: true }))
 // 設定每一筆請求都會通過 method-override 進行處理
