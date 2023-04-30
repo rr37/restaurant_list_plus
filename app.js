@@ -27,6 +27,12 @@ app.use(session({
   saveUninitialized: true
 }))
 usePassport(app)
+app.use((req, res, next) => {
+  // 你可以在這裡 console.log(req.user) 等資訊來觀察
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  next()
+})
 // 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(bodyParser.urlencoded({ extended: true }))
 // 設定每一筆請求都會通過 method-override 進行處理
