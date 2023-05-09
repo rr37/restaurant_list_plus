@@ -36,8 +36,8 @@
 ### 登入功能：
 * bcryptjs@2.4.3 - 密碼雜湊外掛
 * passport@0.4.1 - 登入功能外掛
-* passport-facebook@3.0.0 - 本地登入功能外掛
-* passport-local@1.0.0" - facebook登入功能外掛
+* passport-facebook@3.0.0 - facebook登入功能外掛
+* passport-local@1.0.0" - 本地登入功能外掛
 * connect-flash@0.1.1 - session 驗證資料暫存外掛
 * express-session@1.17.1 - session 驗證外掛
 
